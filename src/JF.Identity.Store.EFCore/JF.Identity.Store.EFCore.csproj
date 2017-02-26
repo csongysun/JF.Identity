@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <PackageReference Include="CSYS.Identity.EFCoreStore" Version="0.0.1-beta1-20170224" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="1.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="1.1.0-msbuild3-final" />
   </ItemGroup>
 
   <ItemGroup>

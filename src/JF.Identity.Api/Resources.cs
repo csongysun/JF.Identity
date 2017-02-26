@@ -1,5 +1,5 @@
 ﻿
-namespace Identity.Api
+namespace JF.Identity.Api
 {
     using System.Globalization;
     using System.Reflection;
@@ -8,7 +8,7 @@ namespace Identity.Api
     internal static class Resources
     {
         private static readonly ResourceManager _resourceManager
-            = new ResourceManager("Identity.Api.Resources", typeof(Resources).GetTypeInfo().Assembly);
+            = new ResourceManager("JF.Identity.Api.Resources", typeof(Resources).GetTypeInfo().Assembly);
 
 		internal static string DefaultError => GetString(nameof(DefaultError));
 		internal static string EntityNotFound (params string[] p0) => string.Format(CultureInfo.CurrentCulture, GetString(nameof(EntityNotFound)), p0);

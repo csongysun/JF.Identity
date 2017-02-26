@@ -1,5 +1,5 @@
 ﻿using CSYS.Identity;
-using Identity.Store.Model;
+using JF.Identity.Store.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;

@@ -1,20 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using CSYS.Identity;
+using JF.Identity.Manager;
+using JF.Identity.Store;
+using JF.Identity.Store.EFCore;
+using JF.Identity.Store.Model;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Configuration;
-using Identity.Store.EFCore;
-using Microsoft.EntityFrameworkCore;
-using Identity.Store;
-using CSYS.Identity.Store;
-using Identity.Store.Model;
-using Identity.Manager;
-using CSYS.Identity;
+using AutoMapper;
+using JF.Identity.Api.Controllers;
+using System.Reflection;
+using Microsoft.AspNetCore.Diagnostics;
+using System.Text;
 
 namespace JF.Identity
 {
@@ -61,7 +61,19 @@ namespace JF.Identity
             });
             #endregion
 
-            services.AddAutoMapper(typeof(Identity.Api.Model.MappingProfile));
+            #region Model Map
+            services.AddAutoMapper(typeof(Api.Model.MappingProfile)); 
+            #endregion
+
+            services.AddLogging();
+            //services.AddCors();
+
+            services.AddMvcCore()
+                .AddApplicationPart(typeof(AuthController).GetTypeInfo().Assembly)
+                .AddJsonFormatters()
+                .AddAuthorization()
+                .AddFormatterMappings()
+                .AddDataAnnotations();
 
         }
 
@@ -71,15 +83,29 @@ namespace JF.Identity
 
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                app.UseExceptionHandler(errorApp =>
+                {
+                    errorApp.Run(async context =>
+                    {
+                        context.Response.StatusCode = 500;
+                        context.Response.ContentType = "application/json";
+                        var error = context.Features.Get<IExceptionHandlerFeature>();
+                        if (error != null)
+                        {
+                            var ex = error.Error;
+                            await context.Response.WriteAsync(ex.ToString(), Encoding.UTF8);
+                        }
+                    });
+                });
             }
 
-            app.Run(async (context) =>
-            {
-                await context.Response.WriteAsync("Hello World!");
-            });
+            //app.Run(async (context) =>
+            //{
+            //    await context.Response.WriteAsync("Hello World!");
+            //});
 
-
+            app.UseIdentity();
+            app.UseMvc();
         }
     }
 }
