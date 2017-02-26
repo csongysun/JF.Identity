@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  jf.identity:
+    image: jf.identity
+    build:
+      context: ./src/JF.Identity
+      dockerfile: Dockerfile
+
+  jf.identity.api:
+    image: jf.identity.api
+    build:
+      context: ./src/JF.Identity.API
+      dockerfile: Dockerfile

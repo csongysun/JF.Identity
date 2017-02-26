@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  api:
+    image: 192.168.31.10:5000/identity-api:0.0.1
+    build:
+      context: ./src/JF.Identity
+      dockerfile: Dockerfile
+    deploy:
+      replicas: 3
+      labels: 
+        traefik.enable: "true"
+        traefik.port: "80"
+        traefik.docker.network: "jf"
+        traefik.backend: api.identity
+        traefik.frontend.rule: "Host:api.identity.jf"
+        traefik.backend.loadbalancer.swarm: "true"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Staging
+    networks:
+      - jf 
+    links:
+      - db:db
+
+  db:
+    image: mongo
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+    volumes:
+      - /data/db:/data/db
+    command: mongod --smallfiles --logpath=/dev/null # --quiet
+    networks:
+      - jf 
+
+networks:  
+ jf:
+   external: true
