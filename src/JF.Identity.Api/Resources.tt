@@ -1,0 +1,66 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ output extension=".cs" #>
+
+<#@ assembly name="System.Windows.Forms" #>
+<#@ import namespace="System.Resources" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.IO" #>
+<#
+var path= this.Host.ResolveAssemblyReference("$(ProjectDir)").Split('\\');
+var nameSpace = path[path.Length-2];
+using (var reader = new ResXResourceReader(this.Host.ResolvePath("Resources.resx")))
+    {
+
+        reader.UseResXDataNodes = false;
+		
+#>
+namespace <#= nameSpace #>
+{
+    using System.Globalization;
+    using System.Reflection;
+    using System.Resources;
+
+    internal static class Resources
+    {
+        private static readonly ResourceManager _resourceManager
+            = new ResourceManager("<#= nameSpace + ".Resources" #>", typeof(Resources).GetTypeInfo().Assembly);
+
+<#  foreach(DictionaryEntry entry in reader) { 
+		var name = entry.Key;
+		var value = entry.Value.ToString();
+		if(!value.Contains("{0}"))
+		{
+#>
+		internal static string <#= name #> => GetString(nameof(<#= name #>));
+<#
+		}
+		else
+		{
+#>
+		internal static string <#= name #> (params string[] p0) => string.Format(CultureInfo.CurrentCulture, GetString(nameof(<#= name #>)), p0);
+<#
+		}
+	}
+#>
+   
+        private static string GetString(string name, params string[] formatterNames)
+        {
+            var value = _resourceManager.GetString(name);
+
+            System.Diagnostics.Debug.Assert(value != null);
+
+            if (formatterNames != null)
+            {
+                for (var i = 0; i < formatterNames.Length; i++)
+                {
+                    value = value.Replace("{" + formatterNames[i] + "}", "{" + i + "}");
+                }
+            }
+
+            return value;
+        }
+    }
+}
+<#
+}
+#>
