@@ -1,0 +1,5 @@
+﻿syntax = "proto3";
+package JF.Identity;
+message User {
+  string email = 1;
+}
