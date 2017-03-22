@@ -13,7 +13,7 @@ namespace JF.Identity
         {
             var host = new WebHostBuilder()
                 .UseKestrel()
-              //  .UseUrls("http://localhost:6000")
+                .UseUrls("http://127.0.0.1:7000")
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()

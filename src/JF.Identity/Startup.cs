@@ -71,10 +71,10 @@ namespace JF.Identity
             services.AddMvcCore()
                 .AddApplicationPart(typeof(AuthController).GetTypeInfo().Assembly)
                 .AddJsonFormatters()
+                .AddProtobufFormatters()
                 .AddAuthorization()
                 .AddFormatterMappings()
                 .AddDataAnnotations();
-
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CSYS.Identity" Version="0.0.1-beta1-20170224" />
+    <PackageReference Include="CSYS.Identity" Version="0.0.1-beta1-20170321" />
   </ItemGroup>
 
   <ItemGroup>

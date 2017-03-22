@@ -7,9 +7,11 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="5.2.0" />
     <PackageReference Include="protobuf" Version="2.6.1.1" />
+    <PackageReference Include="protobuf-net" Version="2.1.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CSYS.Protobuf\CSYS.Protobuf.csproj" />
     <ProjectReference Include="..\JF.Identity.Store.Model\JF.Identity.Store.Model.csproj" />
   </ItemGroup>
 

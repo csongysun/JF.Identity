@@ -1,5 +1,5 @@
 ﻿syntax = "proto3";
-package JF.Identity;
+package JF.Identity.Api.Model.Protobuf.Res;
 message User {
   string email = 1;
 }

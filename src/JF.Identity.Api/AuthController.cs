@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using JF.Identity.Api.Model.Req;
+using JF.Identity.Api.Model.Res;
 using JF.Identity.Manager;
 using JF.Identity.Store.Model;
 using Microsoft.AspNetCore.Authorization;
@@ -29,7 +30,7 @@ namespace JF.Identity.Api.Controllers
 
         [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<IActionResult> LoginAsync([FromBody]LoginModel model)
+        public async Task<IActionResult> LoginAsync([FromBody]LoginReq model)
         {
             if (model == null || !ModelState.IsValid)
                 return BadRequest(ApiErrorDescriber.ModelNotValid);
@@ -37,14 +38,14 @@ namespace JF.Identity.Api.Controllers
             if (result.result.Succeeded)
             {
                 _logger.LogInformation($"User ({model.Email}) log in");
-                return Ok(result.user);
+                return Ok(Mapper.Map<UserRes>(result.user));
             }
             return BadRequest(result.result.Error);
         }
 
         [HttpPost("signup")]
         [AllowAnonymous]
-        public async Task<IActionResult> SignUpAsync([FromBody]SignUpModel model)
+        public async Task<IActionResult> SignUpAsync([FromBody]SignUpReq model)
         {
             if (model == null || !ModelState.IsValid)
                 return BadRequest(ApiErrorDescriber.ModelNotValid);

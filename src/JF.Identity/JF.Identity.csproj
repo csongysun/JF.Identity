@@ -9,16 +9,15 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="1.2.0" />
-    <PackageReference Include="CSYS.Identity" Version="0.0.1-beta1-20170224" />
+    <PackageReference Include="CSYS.Identity" Version="0.0.1-beta1-20170321" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.DataAnnotations" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Json" Version="1.1.1" />
 
-    <PackageReference Include="Google.Protobuf.Tools" Version="3.2.0" />
-
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CSYS.ProtoFormatters\CSYS.ProtobufFormatters.csproj" />
     <ProjectReference Include="..\JF.Identity.Api\JF.Identity.Api.csproj" />
     <ProjectReference Include="..\JF.Identity.Store.EFCore\JF.Identity.Store.EFCore.csproj" />
     <ProjectReference Include="..\JF.Identity.Store\JF.Identity.Store.csproj" />
