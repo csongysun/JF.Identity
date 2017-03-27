@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
-using JF.Identity.Api.Model.Req;
-using JF.Identity.Api.Model.Res;
+using JF.Identity.Proto;
 using JF.Identity.Store.Model;
 using System;
 using System.Collections.Generic;
@@ -25,7 +24,7 @@ namespace JF.Identity.Api.Model
                     Email = model.Email,
                     RefreshToken = model.RefreshToken,
                     Token = model.Token,
-                    TokenExpires = model.TokenExpires.UtcDateTime
+                    TokenExpires = Google.Protobuf.WellKnownTypes.Timestamp.FromDateTimeOffset(model.TokenExpires)
                 });
         }
     }

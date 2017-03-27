@@ -1,0 +1,24 @@
+﻿syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+package JF.Identity.Proto;
+
+message LoginReq {
+    string Email = 1;
+    string Password = 2;
+}
+
+message SignUpReq {
+    string Email = 1;
+    string Password = 2;
+	string Nickname = 3;
+}
+
+message UserRes {
+    string Id = 1;
+    string Nickname = 2;
+	string Email = 3;
+	string RefreshToken = 4;
+	string Token = 5;
+	google.protobuf.Timestamp TokenExpires = 6;
+}
+

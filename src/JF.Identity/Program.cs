@@ -15,7 +15,6 @@ namespace JF.Identity
                 .UseKestrel()
                 .UseUrls("http://127.0.0.1:7000")
                 .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseIISIntegration()
                 .UseStartup<Startup>()
                 .UseApplicationInsights()
                 .Build();

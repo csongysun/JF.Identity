@@ -1,19 +1,24 @@
-﻿using CSYS.Identity;
+﻿using AutoMapper;
+using CSYS.Identity;
+using CSYS.Mvc.Formatters.Protobuf;
+using CSYS.NamingService.ServiceRegister;
+using CSYS.Service.Common;
+using CSYS.Service.Requester;
+using JF.Identity.Api.Controllers;
 using JF.Identity.Manager;
 using JF.Identity.Store;
 using JF.Identity.Store.EFCore;
 using JF.Identity.Store.Model;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
-using AutoMapper;
-using JF.Identity.Api.Controllers;
 using System.Reflection;
-using Microsoft.AspNetCore.Diagnostics;
 using System.Text;
 
 namespace JF.Identity
@@ -34,6 +39,12 @@ namespace JF.Identity
 
         public void ConfigureServices(IServiceCollection services)
         {
+
+            // ms register
+            services.AddSingleton<IRegister, DefaultRegister>();
+            services.AddSingleton<IRequester, DefaltRequester>();
+            services.Configure<ServiceOption>(Configuration.GetSection("Service"));
+
             #region Store Configure
             var connection = Configuration.GetConnectionString("Identity");
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connection));
@@ -42,16 +53,19 @@ namespace JF.Identity
             #endregion
 
             #region Manager Configure
-            services.AddScoped(typeof(UserManager), ser => ser.GetRequiredService<UserManager<User>>());
-            services.AddScoped(typeof(RoleManager), ser => ser.GetRequiredService<RoleManager<Role>>());
-            services.AddScoped(typeof(SignInManager), ser => ser.GetRequiredService<SignInManager<User>>());
+            //services.AddScoped(typeof(UserManager), ser => ser.GetRequiredService<UserManager<User>>());
+            //services.AddScoped(typeof(RoleManager), ser => ser.GetRequiredService<RoleManager<Role>>());
+            //services.AddScoped(typeof(SignInManager), ser => ser.GetRequiredService<SignInManager<User>>());
+            services.AddScoped<UserManager>();
+            services.AddScoped<RoleManager>();
+            services.AddScoped<SignInManager>();
             #endregion
 
             #region Identity Configure
             services.AddIdentity<User, Role>();
-            services.AddScoped<UserManager<User>, UserManager>();
-            services.AddScoped<RoleManager<Role>, RoleManager>();
-            services.AddScoped<SignInManager<User>, SignInManager>();
+            services.AddScoped<UserManager<User>>(ser => ser.GetRequiredService<UserManager>());
+            services.AddScoped<RoleManager<Role>>(ser => ser.GetRequiredService<RoleManager>());
+            services.AddScoped<SignInManager<User>>(ser => ser.GetRequiredService<SignInManager>());
 
             services.Configure<IdentityOptions>(Configuration.GetSection("Identity"));
             services.Configure<IdentityOptions>(identity =>
@@ -68,16 +82,17 @@ namespace JF.Identity
             services.AddLogging();
             //services.AddCors();
 
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             services.AddMvcCore()
                 .AddApplicationPart(typeof(AuthController).GetTypeInfo().Assembly)
-                .AddJsonFormatters()
                 .AddProtobufFormatters()
-                .AddAuthorization()
+//                .AddAuthorization()
                 .AddFormatterMappings()
                 .AddDataAnnotations();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IApplicationLifetime al)
         {
             loggerFactory.AddConsole();
 
@@ -98,11 +113,9 @@ namespace JF.Identity
                     });
                 });
             }
-
-            //app.Run(async (context) =>
-            //{
-            //    await context.Response.WriteAsync("Hello World!");
-            //});
+            var re = app.ApplicationServices.GetRequiredService<IRegister>();
+            
+            re.RegisterAsync().Wait();
 
             app.UseIdentity();
             app.UseMvc();

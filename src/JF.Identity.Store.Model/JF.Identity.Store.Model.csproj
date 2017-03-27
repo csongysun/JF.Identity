@@ -5,8 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CSYS.Identity.Core" Version="0.0.1-beta1-20170321" />
-    <PackageReference Include="protobuf-net" Version="2.1.0" />
+    <PackageReference Include="CSYS.Identity.Core" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>

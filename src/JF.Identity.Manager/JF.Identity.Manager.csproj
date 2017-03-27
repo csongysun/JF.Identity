@@ -5,7 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CSYS.Identity" Version="0.0.1-beta1-20170321" />
+    <PackageReference Include="CSYS.Identity" Version="1.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="1.1.1" />
   </ItemGroup>
 
   <ItemGroup>

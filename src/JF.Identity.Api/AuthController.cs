@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
-using JF.Identity.Api.Model.Req;
-using JF.Identity.Api.Model.Res;
 using JF.Identity.Manager;
+using JF.Identity.Proto;
 using JF.Identity.Store.Model;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
@@ -11,7 +9,6 @@ using System.Threading.Tasks;
 namespace JF.Identity.Api.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
     public class AuthController : ControllerBase
     {
         private readonly UserManager _user;
@@ -29,7 +26,6 @@ namespace JF.Identity.Api.Controllers
         }
 
         [HttpPost("login")]
-        [AllowAnonymous]
         public async Task<IActionResult> LoginAsync([FromBody]LoginReq model)
         {
             if (model == null || !ModelState.IsValid)
@@ -44,7 +40,6 @@ namespace JF.Identity.Api.Controllers
         }
 
         [HttpPost("signup")]
-        [AllowAnonymous]
         public async Task<IActionResult> SignUpAsync([FromBody]SignUpReq model)
         {
             if (model == null || !ModelState.IsValid)
@@ -60,7 +55,6 @@ namespace JF.Identity.Api.Controllers
         }
 
         [HttpGet("refresh")]
-        [AllowAnonymous]
         public async Task<IActionResult> RefreshAsync([FromQuery]string token)
         {
             if (token == null) return BadRequest(ApiErrorDescriber.ModelNotValid);
