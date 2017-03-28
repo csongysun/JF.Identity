@@ -20,6 +20,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 
 namespace JF.Identity
 {
@@ -40,10 +41,11 @@ namespace JF.Identity
         public void ConfigureServices(IServiceCollection services)
         {
 
-            // ms register
+            #region Service Configure
             services.AddSingleton<IRegister, DefaultRegister>();
             services.AddSingleton<IRequester, DefaltRequester>();
             services.Configure<ServiceOption>(Configuration.GetSection("Service"));
+            #endregion
 
             #region Store Configure
             var connection = Configuration.GetConnectionString("Identity");
@@ -113,11 +115,9 @@ namespace JF.Identity
                     });
                 });
             }
-            var re = app.ApplicationServices.GetRequiredService<IRegister>();
-            
-            re.RegisterAsync().Wait();
+            al.ApplicationStarted.Register(async () => await app.ApplicationServices.GetRequiredService<IRegister>().RegisterAsync(CancellationToken.None));
+            //re.RegisterAsync().Wait();
 
-            app.UseIdentity();
             app.UseMvc();
         }
     }
