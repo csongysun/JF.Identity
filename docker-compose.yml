@@ -1,0 +1,8 @@
+version: '2'
+
+services:
+  jf.identity:
+    image: jf.identity
+    build:
+      context: ./src/JF.Identity
+      dockerfile: Dockerfile

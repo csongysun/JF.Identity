@@ -18,6 +18,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
+using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using System.Threading;
@@ -42,8 +43,8 @@ namespace JF.Identity
         {
 
             #region Service Configure
-            services.AddSingleton<IRegister, DefaultRegister>();
-            services.AddSingleton<IRequester, DefaltRequester>();
+            services.AddSingleton<IRegister, DefaultServiceRegister>();
+            services.AddSingleton<IRequester, DefaultServiceRequester>();
             services.Configure<ServiceOption>(Configuration.GetSection("Service"));
             #endregion
 
@@ -115,7 +116,9 @@ namespace JF.Identity
                     });
                 });
             }
-            al.ApplicationStarted.Register(async () => await app.ApplicationServices.GetRequiredService<IRegister>().RegisterAsync(CancellationToken.None));
+
+
+            al.ApplicationStarted.Register(async () => await app.ApplicationServices.GetRequiredService<IRegister>().RegisterAsync());
             //re.RegisterAsync().Wait();
 
             app.UseMvc();

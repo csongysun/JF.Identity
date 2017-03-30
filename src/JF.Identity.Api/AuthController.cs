@@ -4,6 +4,7 @@ using JF.Identity.Proto;
 using JF.Identity.Store.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace JF.Identity.Api.Controllers
@@ -24,6 +25,14 @@ namespace JF.Identity.Api.Controllers
             _signin = signin;
             _logger = loggerFactory.CreateLogger<AuthController>();
         }
+
+        // [HttpGet()]
+        // public async Task<IActionResult> Index()
+        // {
+        //     var res = await new HttpClient().GetAsync("http://192.168.2.49:7001/resolve/a");
+        //     var str = await res.Content.ReadAsStringAsync();
+        //     return Ok(str);
+        // }
 
         [HttpPost("login")]
         public async Task<IActionResult> LoginAsync([FromBody]LoginReq model)
