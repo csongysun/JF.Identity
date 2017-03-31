@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CSYS.Identity.Core" Version="1.0.0" />
+    <ProjectReference Include="..\..\..\..\CSYS\CSYS.Identity\src\CSYS.Identity.Core\CSYS.Identity.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
