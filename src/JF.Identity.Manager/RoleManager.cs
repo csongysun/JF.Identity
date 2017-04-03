@@ -1,12 +1,8 @@
 ﻿using CSYS.Identity;
+using JF.Identity.Store;
 using JF.Identity.Store.Model;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using CSYS.Identity.Store;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using JF.Identity.Store;
 using System.Threading;
 
 namespace JF.Identity.Manager

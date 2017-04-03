@@ -7,12 +7,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Threading;
+using CSYS.Common;
 
 namespace JF.Identity.Manager
 {
     public class UserManager : UserManager<User>
     {
         private readonly HttpContext _context;
+        private readonly IUserStore _store;
         public UserManager(IUserStore store,
             ITokenProvider tokenProvider,
             IPasswordHasher passwordHasher,
@@ -29,5 +31,26 @@ namespace JF.Identity.Manager
         {
             return GetUserByClaims(_context.User);
         }
+
+        public override async Task<Error> CreateAsync(User user, string password)
+        {
+            UpdatePasswordHashInternal(user, password);
+            return await Store.CreateAsync(user, CancellationToken);
+        }
+
+        public override async Task<Error> SignInAsync(User user)
+        {
+            await UpdateSecurityStampInternal(user);
+            await UpdateRefreshTokenInternal(user);
+            return await _store.SignInAsync(user);
+        }
+
+        //protected override async Task<Error> UpdatePasswordHashAsync(User user, string newPassword)
+        //{
+        //    var hash = newPassword != null ? PasswordHasher.HashPassword(newPassword) : null;
+        //    user.PasswordHash = hash;
+        //    await UpdateSecurityStampInternal(user);
+        //    return null;
+        //}
     }
 }

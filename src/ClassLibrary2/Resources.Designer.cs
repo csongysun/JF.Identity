@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HJPT.Api {
+namespace ClassLibrary2 {
     using System;
     using System.Reflection;
     
@@ -40,7 +40,7 @@ namespace HJPT.Api {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("HJPT.Api.Resources", typeof(Resources).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ClassLibrary2.Resources", typeof(Resources).GetTypeInfo().Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -62,65 +62,11 @@ namespace HJPT.Api {
         }
         
         /// <summary>
-        ///   查找类似 BBBB 的本地化字符串。
+        ///   查找类似 插入数据出错bbb 的本地化字符串。
         /// </summary>
-        internal static string AAAA {
+        internal static string DBInsertFailed {
             get {
-                return ResourceManager.GetString("AAAA", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Announce地址不合法 的本地化字符串。
-        /// </summary>
-        internal static string AnnounceInvalid {
-            get {
-                return ResourceManager.GetString("AnnounceInvalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 未知错误 的本地化字符串。
-        /// </summary>
-        internal static string DefaultError {
-            get {
-                return ResourceManager.GetString("DefaultError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 未找到标识为{0}的{1} 的本地化字符串。
-        /// </summary>
-        internal static string EntityNotFound {
-            get {
-                return ResourceManager.GetString("EntityNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 参数不合法 的本地化字符串。
-        /// </summary>
-        internal static string ModelNotValid {
-            get {
-                return ResourceManager.GetString("ModelNotValid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 未开放注册 的本地化字符串。
-        /// </summary>
-        internal static string SignUpNotOpen {
-            get {
-                return ResourceManager.GetString("SignUpNotOpen", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 种子不 的本地化字符串。
-        /// </summary>
-        internal static string TorrentInvalid {
-            get {
-                return ResourceManager.GetString("TorrentInvalid", resourceCulture);
+                return ResourceManager.GetString("DBInsertFailed", resourceCulture);
             }
         }
     }

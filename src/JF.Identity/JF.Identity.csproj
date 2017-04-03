@@ -10,7 +10,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="1.2.0" />
-    <PackageReference Include="CSYS.Mvc.Formatters.Protobuf" Version="1.0.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.DataAnnotations" Version="1.1.1" />
@@ -18,9 +17,9 @@
 
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\CSYS\CSYS.NamingService\src\CSYS.NamingService.ServiceRegister\CSYS.NamingService.ServiceRegister.csproj" />
+    <ProjectReference Include="..\..\..\..\CSYS\CSYS.Mvc.Formatters.Protobuf\CSYS.Mvc.Formatters.Protobuf\CSYS.Mvc.Formatters.Protobuf.csproj" />
     <ProjectReference Include="..\JF.Identity.Api\JF.Identity.Api.csproj" />
-    <ProjectReference Include="..\JF.Identity.Store.EFCore\JF.Identity.Store.EFCore.csproj" />
+    <ProjectReference Include="..\JF.Identity.DapperSqlStore\JF.Identity.DapperSqlStore.csproj" />
     <ProjectReference Include="..\JF.Identity.Store\JF.Identity.Store.csproj" />
     <ProjectReference Include="..\JF.Identity.Manager\JF.Identity.Manager.csproj" />
   </ItemGroup>

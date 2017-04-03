@@ -1,6 +1,4 @@
 ﻿using CSYS.Identity;
-using CSYS.NamingService.ServiceRegister;
-using CSYS.Service.Requester;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;

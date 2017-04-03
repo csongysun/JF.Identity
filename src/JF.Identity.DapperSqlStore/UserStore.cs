@@ -5,9 +5,12 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using CSYS.Common;
-using CSYS.Identity.Store;
 using JF.Identity.Store;
 using JF.Identity.Store.Model;
+using Dapper;
+using System.Linq;
+using System.Data.SqlClient;
+using Npgsql;
 
 namespace JF.Identity.DapperSqlStore
 {
@@ -20,75 +23,258 @@ namespace JF.Identity.DapperSqlStore
             _context = context;
         }
 
-        public Task AddClaimsAsync(User user, IEnumerable<Claim> claims, CancellationToken cancellationToken)
+        public async Task<Error> CreateAsync(User user, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            ThrowIfDisposed();
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            var er = 0;
+            var sql = @"INSERT INTO users (Id, Email, PasswordHash, Nickname, SecurityStamp) 
+                VALUES (uuid_generate_v4(), @Email, @PasswordHash, @Nickname, uuid_generate_v4())";
+
+            using (var db = _context.Connection)
+            {
+                db.Open();
+                using (var tran = db.BeginTransaction())
+                {
+                    try
+                    {
+                        er = await db.ExecuteAsync(sql,
+                            new
+                            {
+                                Email = user.Email,
+                                PasswordHash = user.PasswordHash,
+                                Nickname = user.Nickname,
+                            },
+                            tran);
+                        tran.Commit();
+                        if (er == 0) return ErrorDescriber.DBInsertFailed("0 row effected");
+                        return null;
+                    }
+                    catch(PostgresException e)
+                    {
+                        tran.Rollback();
+                        return ErrorDescriber.DBInsertFailed(e.SqlState);
+                    }
+                }
+            }
+        }
+
+        
+
+        public Task AddClaimsAsync(User user, IEnumerable<Claim> claims,  CancellationToken cancellationToken = default(CancellationToken))
         {
             throw new NotImplementedException();
         }
 
-        public Task AddToRoleAsync(User user, string roleName, CancellationToken cancellationToken)
+        public Task AddToRoleAsync(User user, string roleName,  CancellationToken cancellationToken = default(CancellationToken))
         {
             throw new NotImplementedException();
         }
 
-        public Task<Error> CreateAsync(User user, CancellationToken cancellationToken)
+
+
+        public async Task<User> FindByEmailAsync(string email,  CancellationToken cancellationToken = default(CancellationToken))
+        {
+            ThrowIfDisposed();
+            cancellationToken.ThrowIfCancellationRequested();
+            if (email == null)
+            {
+                throw new ArgumentNullException(nameof(email));
+            }
+
+            var sql = @"SELECT * FROM users WHERE Email = @Email TOP 1";
+
+            using (var db = _context.Connection)
+            {
+                db.Open();
+                return await db.QueryFirstAsync<User>(sql, new { Email = email });
+            }
+        }
+
+        public Task<User> FindByIdAsync(string id,  CancellationToken cancellationToken = default(CancellationToken))
         {
             throw new NotImplementedException();
         }
 
-        public Task<User> FindByEmailAsync(string email, CancellationToken cancellationToken)
+        public Task<IList<Claim>> GetClaimsAsync(User user,  CancellationToken cancellationToken = default(CancellationToken))
         {
             throw new NotImplementedException();
         }
 
-        public Task<User> FindByIdAsync(string id, CancellationToken cancellationToken)
+        public Task<IList<string>> GetRolesAsync(User user,  CancellationToken cancellationToken = default(CancellationToken))
         {
             throw new NotImplementedException();
         }
 
-        public Task<IList<Claim>> GetClaimsAsync(User user, CancellationToken cancellationToken)
+        public Task<IList<User>> GetUsersForClaimAsync(Claim claim,  CancellationToken cancellationToken = default(CancellationToken))
         {
             throw new NotImplementedException();
         }
 
-        public Task<IList<string>> GetRolesAsync(User user, CancellationToken cancellationToken)
+        public Task<IList<User>> GetUsersInRoleAsync(string roleName,  CancellationToken cancellationToken = default(CancellationToken))
         {
             throw new NotImplementedException();
         }
 
-        public Task<IList<User>> GetUsersForClaimAsync(Claim claim, CancellationToken cancellationToken)
+        public Task<bool> IsInRoleAsync(User user, string roleName,  CancellationToken cancellationToken = default(CancellationToken))
         {
             throw new NotImplementedException();
         }
 
-        public Task<IList<User>> GetUsersInRoleAsync(string roleName, CancellationToken cancellationToken)
+        public Task RemoveClaimsAsync(User user, IEnumerable<Claim> claims,  CancellationToken cancellationToken = default(CancellationToken))
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> IsInRoleAsync(User user, string roleName, CancellationToken cancellationToken)
+        public Task RemoveFromRoleAsync(User user, string roleName,  CancellationToken cancellationToken = default(CancellationToken))
         {
             throw new NotImplementedException();
         }
 
-        public Task RemoveClaimsAsync(User user, IEnumerable<Claim> claims, CancellationToken cancellationToken)
+        public Task ReplaceClaimAsync(User user, Claim claim, Claim newClaim,  CancellationToken cancellationToken = default(CancellationToken))
         {
             throw new NotImplementedException();
         }
 
-        public Task RemoveFromRoleAsync(User user, string roleName, CancellationToken cancellationToken)
+        public async Task<Error> UpdateAsync(User user,  CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            cancellationToken.ThrowIfCancellationRequested();
+            ThrowIfDisposed();
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+            var sql = @"UPDATE users SET 
+                PasswordHash = @PasswordHash,
+                AccessFailedCount = @AccessFailedCount,
+                BanEnd = @BanEnd,
+                LockoutEnd = @LockoutEnd,
+                RefreshToken = @RefreshToken,
+                RefreshTokenValid = @RefreshTokenValid,
+                SecurityStamp = @SecurityStamp
+                WHERE Id = @Id";
+
+            using (var db = _context.Connection)
+            {
+                db.Open();
+                using (var tran = db.BeginTransaction())
+                {
+                    try
+                    {
+                        var x = await db.ExecuteAsync(sql, new
+                        {
+                            PasswordHash = user.PasswordHash,
+                            AccessFailedCount = user.AccessFailedCount,
+                            BanEnd = user.BanEnd,
+                            LockoutEnd = user.LockoutEnd,
+                            RefreshToken = user.RefreshToken,
+                            RefreshTokenValid = user.RefreshTokenValid,
+                            SecurityStamp = user.SecurityStamp,
+                        },
+                        tran);
+                        tran.Commit();
+                        if (x != 0) return ErrorDescriber.DBInsertFailed("Not 1 row effected");
+                        return null;
+                    }
+                    catch (PostgresException e)
+                    {
+                        tran.Rollback();
+                        return ErrorDescriber.DBInsertFailed(e.SqlState);
+                    }
+                }
+            }
         }
 
-        public Task ReplaceClaimAsync(User user, Claim claim, Claim newClaim, CancellationToken cancellationToken)
+        #region Custom
+        public async Task<(Error, User)> CreateAndRetrieveAsync(User user, CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            cancellationToken.ThrowIfCancellationRequested();
+            ThrowIfDisposed();
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            var sql = @"INSERT INTO users (Id, Email, PasswordHash, Nickname, SecurityStamp) 
+                VALUES (uuid_generate_v4(), @Email, @PasswordHash, @Nickname, uuid_generate_v4())
+                returning *";
+
+            using (var db = _context.Connection)
+            {
+                db.Open();
+                using (var tran = db.BeginTransaction())
+                {
+                    try
+                    {
+                        var x = await db.QueryAsync<User>(sql, new
+                        {
+                            Email = user.Email,
+                            PasswordHash = user.PasswordHash,
+                            Nickname = user.Nickname,
+                        },
+                        tran);
+                        tran.Commit();
+                        user = x.First();
+                        return (null, user);
+                    }
+                    catch (PostgresException e)
+                    {
+                        tran.Rollback();
+                        return (ErrorDescriber.DBInsertFailed(e.SqlState), null);
+                    }
+                }
+            }
+        }
+        public async Task<Error> SignInAsync(User user, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            ThrowIfDisposed();
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+            var sql = @"UPDATE users SET 
+                AccessFailedCount = 0,
+                LockoutEnd = now(),
+                RefreshToken = @RefreshToken,
+                RefreshTokenValid = @RefreshTokenValid,
+                SecurityStamp = @SecurityStamp
+                WHERE Id = @Id";
+
+            using (var db = _context.Connection)
+            {
+                db.Open();
+                using (var tran = db.BeginTransaction())
+                {
+                    try
+                    {
+                        var x = await db.ExecuteAsync(sql, new
+                        {
+                            RefreshToken = user.RefreshToken,
+                            RefreshTokenValid = user.RefreshTokenValid,
+                            SecurityStamp = user.SecurityStamp,
+                            Id = user.Id
+                        },
+                        tran);
+                        tran.Commit();
+                        if (x != 1) return ErrorDescriber.DBUpdateFailed("Not 1 row effected");
+                        return null;
+                    }
+                    catch (PostgresException e)
+                    {
+                        tran.Rollback();
+                        return ErrorDescriber.DBUpdateFailed(e.SqlState);
+                    }
+                }
+            }
         }
 
-        public Task<Error> UpdateAsync(User user, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
+        #endregion
 
 
         #region IDisposable Support

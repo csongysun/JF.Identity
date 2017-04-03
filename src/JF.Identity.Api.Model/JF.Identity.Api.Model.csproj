@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\CSYS\CSYS.Proto\src\CSYS.Proto.Common\CSYS.Proto.Common.csproj" />
     <ProjectReference Include="..\JF.Identity.Proto\JF.Identity.Proto.csproj" />
     <ProjectReference Include="..\JF.Identity.Store.Model\JF.Identity.Store.Model.csproj" />
   </ItemGroup>

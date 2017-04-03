@@ -25,7 +25,7 @@ namespace JF.Identity.Api
         public static Error EntityNotFound(string key, string Name) => new Error
         {
             Code = nameof(EntityNotFound),
-            Description = Resources.EntityNotFound(key, Name)
+            Description = string.Format(Resources.EntityNotFound, key, Name)
         };
 
     }

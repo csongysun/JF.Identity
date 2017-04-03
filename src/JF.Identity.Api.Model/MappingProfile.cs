@@ -19,12 +19,18 @@ namespace JF.Identity.Api.Model
             CreateMap<User, UserRes>()
                 .ConvertUsing(model => new UserRes
                 {
-                    Id = model.Id,
+                    Id = model.Id.ToString(),
                     Nickname = model.Nickname,
                     Email = model.Email,
                     RefreshToken = model.RefreshToken,
                     Token = model.Token,
                     TokenExpires = Google.Protobuf.WellKnownTypes.Timestamp.FromDateTimeOffset(model.TokenExpires)
+                });
+            CreateMap<CSYS.Common.Error, CSYS.Proto.Common.Error>()
+                .ConvertUsing(model => new CSYS.Proto.Common.Error
+                {
+                    Code = model.Code,
+                    Info = model.Description
                 });
         }
     }

@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\CSYS\CSYS.Identity\src\CSYS.Identity\CSYS.Identity.csproj" />
     <ProjectReference Include="..\JF.Identity.Store.Model\JF.Identity.Store.Model.csproj" />
     <ProjectReference Include="..\JF.Identity.Store\JF.Identity.Store.csproj" />
   </ItemGroup>

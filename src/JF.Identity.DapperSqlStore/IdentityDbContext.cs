@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
-using MySql.Data.MySqlClient;
+using System.Linq;
+using Npgsql;
 
 namespace JF.Identity.DapperSqlStore
 {
@@ -9,15 +10,18 @@ namespace JF.Identity.DapperSqlStore
         private readonly string _connStr;
         public IdentityDbContext(string connStr)
         {
-            _connStr = new MySqlConnectionStringBuilder(connStr)
+            _connStr = new NpgsqlConnectionStringBuilder(connStr)
             {
-                AllowZeroDateTime = true,
-                ConvertZeroDateTime = true,
-                MaximumPoolSize = 1000,
-                Pooling = true
+                //AllowZeroDateTime = true,
+                //ConvertZeroDateTime = true,
+                MinPoolSize = 0,
+                MaxPoolSize = 100,
+                Pooling = true,
+                //ConnectionTimeout = 10,
+                //DefaultCommandTimeout = 10,
             }.ConnectionString;
         }
-        public IDbConnection Connection => new MySqlConnection(_connStr);
+        public IDbConnection Connection => new NpgsqlConnection(_connStr);
 
     }
 }

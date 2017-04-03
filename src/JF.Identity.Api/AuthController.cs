@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CSYS.Proto.Common;
 using JF.Identity.Manager;
 using JF.Identity.Proto;
 using JF.Identity.Store.Model;
@@ -26,50 +27,36 @@ namespace JF.Identity.Api.Controllers
             _logger = loggerFactory.CreateLogger<AuthController>();
         }
 
-        // [HttpGet()]
-        // public async Task<IActionResult> Index()
-        // {
-        //     var res = await new HttpClient().GetAsync("http://192.168.2.49:7001/resolve/a");
-        //     var str = await res.Content.ReadAsStringAsync();
-        //     return Ok(str);
-        // }
-
         [HttpPost("login")]
         public async Task<IActionResult> LoginAsync([FromBody]LoginReq model)
         {
-            if (model == null || !ModelState.IsValid)
-                return BadRequest(ApiErrorDescriber.ModelNotValid);
-            var result = await _signin.PasswordSignInAsync(model.Email, model.Password);
-            if (result.result.Succeeded)
+            var (err, user) = await _signin.PasswordSignInAsync(model.Email, model.Password);
+            if (err == null)
             {
                 _logger.LogInformation($"User ({model.Email}) log in");
-                return Ok(Mapper.Map<UserRes>(result.user));
+                return Ok(Mapper.Map<UserRes>(user));
             }
-            return BadRequest(result.result.Error);
+            return BadRequest(Mapper.Map<Error>(err));
         }
 
         [HttpPost("signup")]
         public async Task<IActionResult> SignUpAsync([FromBody]SignUpReq model)
         {
-            if (model == null || !ModelState.IsValid)
-                return BadRequest(ApiErrorDescriber.ModelNotValid);
-
             var user = Mapper.Map<User>(model);
-            var result = await _user.CreateAsync(user, model.Password);
-            if (result.Succeeded)
+            var err = await _user.CreateAsync(user, model.Password);
+            if (err == null)
             {
                 return NoContent();
             }
-            return BadRequest(result.Error);
+            return BadRequest(Mapper.Map<Error>(err));
         }
 
         [HttpGet("refresh")]
         public async Task<IActionResult> RefreshAsync([FromQuery]string token)
         {
-            if (token == null) return BadRequest(ApiErrorDescriber.ModelNotValid);
-            var result = await _signin.RefreshLoginAsync(token);
-            if (!result.result.Succeeded) return BadRequest(result.result.Error);
-            return Ok(result.user);
+            var (err, user) = await _signin.RefreshLoginAsync(token);
+            if (err == null) return BadRequest(Mapper.Map<Error>(err));
+            return Ok(Mapper.Map<UserRes>(user));
         }
 
         [HttpGet("signout")]

@@ -1,0 +1,70 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ output extension=".cs" #>
+
+<#@ assembly name="System.Windows.Forms" #>
+<#@ import namespace="System.Resources" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.IO" #>
+
+<#
+var path= this.Host.ResolveAssemblyReference("$(ProjectDir)").Split('\\');
+var nameSpace = path[path.Length-2];
+using (var reader = new ResXResourceReader(this.Host.ResolvePath("Resources.resx")))
+    {
+
+        reader.UseResXDataNodes = false;
+		
+#>
+namespace <#= nameSpace #>
+{
+    using System.Globalization;
+    using System.Reflection;
+    using System.Resources;
+
+	[global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    internal class Resources
+    {
+		private static global::System.Resources.ResourceManager resourceMan;
+        
+        private static global::System.Globalization.CultureInfo resourceCulture;
+        
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+		internal Resources() {
+        }
+
+		[global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if (object.ReferenceEquals(resourceMan, null)) {
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("<#= nameSpace + ".Resources" #>", typeof(Resources).GetTypeInfo().Assembly);
+                    resourceMan = temp;
+                }
+                return resourceMan;
+            }
+		}
+		[global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Globalization.CultureInfo Culture {
+            get {
+                return resourceCulture;
+            }
+            set {
+                resourceCulture = value;
+            }
+        }
+
+
+<#  foreach(DictionaryEntry entry in reader) { 
+		var name = entry.Key;
+		var value = entry.Value.ToString();
+
+#>
+		internal static string <#= name #> => ResourceManager.GetString("<#= name #>", resourceCulture);
+<#
+		}
+	}
+#>
+   
+    }
+}
