@@ -1,9 +1,12 @@
-version: '3'
+version: '3.2'
 
 services:
   ci-build:
     image: microsoft/aspnetcore-build:2.0.0
     volumes:
       - .:/src
+      - .:/src
+      - ~/.nuget/packages:/root/.nuget/packages
+      - ~/.local/share/NuGet/v3-cache:/root/.local/share/NuGet/v3-cache
     working_dir: /src
-    command: /bin/bash -c "dotnet publish ./JF.Identity.sln -c Release -o ./obj/Docker/publish"
+    command: bash -c -e '${cmd}'
