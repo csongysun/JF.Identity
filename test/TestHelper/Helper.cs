@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
+using System.Net.Http;
 using System.Reflection;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace TestHelper
 {
@@ -26,6 +26,11 @@ namespace TestHelper
 
                 path = Path.Combine(path, "src", projDirName);
                 return path;
+        }
+
+        public static StringContent JsonContent(object obj)
+        {
+            return new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json");
         }
     }
 }
