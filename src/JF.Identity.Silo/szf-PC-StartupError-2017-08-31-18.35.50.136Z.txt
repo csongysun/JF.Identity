@@ -1,0 +1,4 @@
+2017-08-31-18.35.50.136ZZ
+ERROR starting Orleans silo name=szf-PC Exception=
+Exc level 0: System.InvalidOperationException: Cannot start silo szf-PC due to prior initialization error
+   at Orleans.Runtime.Host.SiloHost.StartOrleansSilo(Boolean catchExceptions)

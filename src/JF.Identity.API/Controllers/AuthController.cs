@@ -1,31 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using JF.Common;
-using JF.Domain.Command;
-using JF.Identity.Core.Application.Command;
+﻿using JF.Identity.API.Utils;
+using JF.Identity.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using JF.Identity.API.Utils;
+using Orleans;
+using System;
+using System.Threading.Tasks;
 
 namespace JF.Identity.API.Controllers
 {
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
-        private readonly ICommandBus _commandBus;
+        private readonly IClusterClient _client;
         public AuthController(
-            ICommandBus commandBus
+            IClusterClient client
             )
         {
-            _commandBus = commandBus ?? throw new ArgumentNullException(nameof(commandBus));
+            _client = client ?? throw new ArgumentNullException(nameof(client));
         }
 
         [HttpPost("signup")]
         public async Task<IActionResult> SignUpAsync([FromBody] SignUpCommand cmd)
         {
-            var ret = await _commandBus.SendAsync<SignUpCommand, XError>(cmd, HttpContext.RequestAborted);
-            return ret.IsOk ? Accepted() : this.Error(ret.ErrorCode);
+            var hlr = _client.GetGrain<ISignUpCommandHandler>(Guid.NewGuid());
+            var ret = await hlr.SignUpAsync(cmd);
+            return ret.Succeed ? Accepted() : this.Error(ret.ErrorCode);
         }
     }
 }

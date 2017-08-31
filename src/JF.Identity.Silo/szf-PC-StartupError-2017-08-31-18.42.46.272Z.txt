@@ -1,0 +1,38 @@
+2017-08-31-18.42.46.272ZZ
+ERROR starting Orleans silo name=szf-PC Exception=
+Exc level 0: System.AggregateException: One or more errors occurred. ( System.ArgumentException: MembershipTableGrain cannot run without Seed node - please check your silo configuration file and make sure it specifies a SeedNode element.  Alternatively, you may want to use AzureTable for LivenessType.
+Parameter name: grainId = MembershipTableGrain
+   at Orleans.Runtime.GrainDirectory.LocalGrainDirectory.CalculateTargetSilo(GrainId grainId, Boolean excludeThisSiloIfStopping)
+   at Orleans.Runtime.GrainDirectory.LocalGrainDirectory.LocalLookup(GrainId grain, AddressesAndTag& result)
+   at Orleans.Runtime.Catalog.FastLookup(GrainId grain, AddressesAndTag& addresses)
+   at Orleans.Runtime.Placement.RandomPlacementDirector.TrySelectActivationSynchronously(PlacementStrategy strategy, GrainId target, IPlacementRuntime context, PlacementResult& placementResult)
+   at Orleans.Runtime.Placement.PlacementDirectorsManager.TrySelectActivationSynchronously(ActivationAddress sendingAddress, PlacementTarget targetGrain, IPlacementRuntime context, PlacementStrategy strategy, PlacementResult& placementResult)
+   at Orleans.Runtime.Dispatcher.AddressMessage(Message message)
+   at Orleans.Runtime.Dispatcher.AsyncSendMessage(Message message, ActivationData sendingActivation))
+   at System.Threading.Tasks.Task.ThrowIfExceptional(Boolean includeTaskCanceledExceptions)
+   at System.Threading.Tasks.Task.Wait(Int32 millisecondsTimeout, CancellationToken cancellationToken)
+   at System.Threading.Tasks.Task.Wait(TimeSpan timeout)
+   at Orleans.OrleansTaskExtentions.WaitWithThrow(Task task, TimeSpan timeout)
+   at Orleans.Runtime.Silo.DoStart()
+   at Orleans.Runtime.Silo.Start()
+   at Orleans.Runtime.Host.SiloHost.StartOrleansSilo(Boolean catchExceptions)
+Exc level 1: Orleans.Runtime.OrleansMessageRejectionException:  System.ArgumentException: MembershipTableGrain cannot run without Seed node - please check your silo configuration file and make sure it specifies a SeedNode element.  Alternatively, you may want to use AzureTable for LivenessType.
+Parameter name: grainId = MembershipTableGrain
+   at Orleans.Runtime.GrainDirectory.LocalGrainDirectory.CalculateTargetSilo(GrainId grainId, Boolean excludeThisSiloIfStopping)
+   at Orleans.Runtime.GrainDirectory.LocalGrainDirectory.LocalLookup(GrainId grain, AddressesAndTag& result)
+   at Orleans.Runtime.Catalog.FastLookup(GrainId grain, AddressesAndTag& addresses)
+   at Orleans.Runtime.Placement.RandomPlacementDirector.TrySelectActivationSynchronously(PlacementStrategy strategy, GrainId target, IPlacementRuntime context, PlacementResult& placementResult)
+   at Orleans.Runtime.Placement.PlacementDirectorsManager.TrySelectActivationSynchronously(ActivationAddress sendingAddress, PlacementTarget targetGrain, IPlacementRuntime context, PlacementStrategy strategy, PlacementResult& placementResult)
+   at Orleans.Runtime.Dispatcher.AddressMessage(Message message)
+   at Orleans.Runtime.Dispatcher.AsyncSendMessage(Message message, ActivationData sendingActivation)
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Orleans.Runtime.MembershipService.MembershipTableFactory.<GetMembershipTable>d__5.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Orleans.Runtime.MembershipService.MembershipOracle.<Start>d__30.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Orleans.Runtime.Scheduler.SchedulerExtensions.<>c__DisplayClass1_0.<<QueueTask>b__0>d.MoveNext()

@@ -1,0 +1,7 @@
+2017-08-31-18.35.50.132ZZ
+ERROR starting Orleans silo name=szf-PC Exception=
+Exc level 0: System.MissingMethodException: Method not found: 'System.AppDomainSetup System.AppDomain.get_SetupInformation()'.
+   at Orleans.Runtime.Configuration.ConfigUtilities.RuntimeVersionInfo()
+   at Orleans.Runtime.Configuration.ClusterConfiguration.ToString(String siloName)
+   at Orleans.Runtime.Silo..ctor(SiloInitializationParameters initializationParams)
+   at Orleans.Runtime.Host.SiloHost.InitializeOrleansSilo()
