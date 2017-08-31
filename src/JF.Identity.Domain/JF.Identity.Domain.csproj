@@ -6,7 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="SeedWork\" />
+    <Compile Remove="SeedWork\**" />
+    <EmbeddedResource Remove="SeedWork\**" />
+    <None Remove="SeedWork\**" />
   </ItemGroup>
 
   <ItemGroup>
