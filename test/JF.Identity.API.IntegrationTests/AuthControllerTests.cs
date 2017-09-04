@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using JF.Common;
+using JF.Domain.Command;
 using JF.Identity.Core.Application.Command;
 using Moq;
 using Newtonsoft.Json;
@@ -24,7 +25,7 @@ namespace JF.Identity.API.IntegrationTests
         {
             var cmd = new SignUpCommand("", "", "");
             var handlr = MockService.MockSignUpCommandHandler;
-            handlr.SetReturnsDefault(Task.FromResult(XError.Ok));
+            handlr.SetReturnsDefault(Task.FromResult(new CommandResult()));
 
             var res = await _client.PostAsync("api/auth/signup" , Helper.JsonContent(cmd));
 
@@ -36,7 +37,7 @@ namespace JF.Identity.API.IntegrationTests
         {
             var cmd = new SignUpCommand("", "", "");
             var handlr = MockService.MockSignUpCommandHandler;
-            var err = new XError("err");
+            var err = new CommandResult("err");
             handlr.SetReturnsDefault(Task.FromResult(err));
 
             var res = await _client.PostAsync("api/auth/signup", Helper.JsonContent(cmd));

@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="JF.Common" Version="1.0.0-20170830.3" />
-    <PackageReference Include="JF.Domain" Version="1.0.0-20170830.3" />
+    <PackageReference Include="JF.Common" Version="$(JFCoreFxVersion)" />
+    <PackageReference Include="JF.Domain" Version="$(JFCoreFxVersion)" />
   </ItemGroup>
 
 </Project>

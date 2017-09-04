@@ -8,11 +8,11 @@ using JF.Domain.Command;
 
 namespace JF.Identity.Core.Application.Command
 {
-    public class SignUpCommandHandler: ICommandHandler<SignUpCommand, XError>
+    public class AuthCommandHandler: ICommandHandler<SignUpCommand>
     {
-        public Task<XError> HandleAsync(SignUpCommand command, CancellationToken cancellationToken = default)
+        public Task<CommandResult> HandleAsync(SignUpCommand command, CancellationToken cancellationToken = default)
         {
-            return Task.FromResult(XError.Ok);
+            return Task.FromResult(new CommandResult());
         }
     }
 }

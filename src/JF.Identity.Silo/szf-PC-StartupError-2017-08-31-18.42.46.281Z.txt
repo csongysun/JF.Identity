@@ -1,4 +1,0 @@
-2017-08-31-18.42.46.281ZZ
-ERROR starting Orleans silo name=szf-PC Exception=
-Exc level 0: Orleans.Runtime.OrleansException: Failed to start Orleans silo 'szf-PC' as a Secondary node.
-   at JF.Identity.Silo.OrleansHostWrapper.Run() in C:\Users\csong\Repos\JF\JF.Identity\src\JF.Identity.Silo\OrleansHostWrapper.cs:line 39

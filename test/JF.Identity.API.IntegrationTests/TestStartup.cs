@@ -15,7 +15,7 @@ namespace JF.Identity.API.IntegrationTests
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<ICommandBus, CommandBus>();
+            services.AddScoped<ICommandBus, CommandBus>();
 
             services.AddScoped(_ => MockService.MockSignUpCommandHandler.Object);
 

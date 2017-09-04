@@ -7,14 +7,14 @@ namespace TestHelper
 {
     public static class MockService
     {
-        private static Mock<ICommandHandler<SignUpCommand, XError>> _mockSignUpCommandHandler;
-        public static Mock<ICommandHandler<SignUpCommand,XError>> MockSignUpCommandHandler
+        private static Mock<ICommandHandler<SignUpCommand>> _mockSignUpCommandHandler;
+        public static Mock<ICommandHandler<SignUpCommand>> MockSignUpCommandHandler
         {
             get
             {
                 if(_mockSignUpCommandHandler == null)
                 {
-                    var mockSignUpCommandHandler = new Mock<ICommandHandler<SignUpCommand, XError>>();
+                    var mockSignUpCommandHandler = new Mock<ICommandHandler<SignUpCommand>>();
 
                     _mockSignUpCommandHandler = mockSignUpCommandHandler;
                 }

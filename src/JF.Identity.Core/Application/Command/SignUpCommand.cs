@@ -6,7 +6,7 @@ using JF.Domain.Command;
 
 namespace JF.Identity.Core.Application.Command
 {
-    public class SignUpCommand: ICommand<XError>
+    public class SignUpCommand: ICommand
     {
         public SignUpCommand(
             string email,
