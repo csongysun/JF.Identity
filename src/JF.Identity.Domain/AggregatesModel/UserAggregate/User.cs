@@ -1,34 +1,40 @@
 ﻿using JF.Domain.SeedWork;
 using System;
+using JF.Identity.Domain.Events;
 
 namespace JF.Identity.Domain.AggregatesModel.UserAggregate
 {
     public class User: Entity
     {
-        public User()
-        { }
+        #region properties
 
-        public User(Guid id)
-        {
-            this.Id = id;
-        }
+        public Guid Id { get; private set; }
+        public string PasswordHash { get; private set; }
+        public string Nickname { get; private set; }
+        public string Email { get; private set; }
+        public bool EmailConfirmed { get; private set; } = false;
+        public DateTimeOffset BanEnd { get; private set; }
+        public DateTimeOffset LockoutEnd { get; private set; }
+        public int AccessFailedCount { get; private set; } = 0;
+        public string RefreshToken { get; private set; } = null;
+        public DateTimeOffset RefreshTokenEnd { get; private set; }
+        public string SecurityStamp { get; private set; }
 
-        #region Base Identity
-        public Guid Id { get; set; }
-        public string PasswordHash { get; set; }
-        public string Nickname { get; set; }
-        public string Email { get; set; }
-        public bool EmailConfirmed { get; set; }
-        public DateTimeOffset BanEnd { get; set; }
-        public DateTimeOffset LockoutEnd { get; set; }
-        public int AccessFailedCount { get; set; }
-        public string RefreshToken { get; set; }
-        public DateTimeOffset RefreshTokenEnd { get; set; }
-        public string SecurityStamp { get; set; }
         #endregion
 
-        public string Token { get; set; }
-        public DateTimeOffset TokenEnd { get; set; }
 
+        public static User Create(string email, string passworldHash, string nickname)
+        {
+            var user = new User();
+            user.Email = email;
+            user.PasswordHash = passworldHash;
+            user.Nickname = user.Nickname;
+
+            user.SecurityStamp = Guid.NewGuid().ToString();
+
+            user.AddDomainEvent(new UserCreatedEvent(user));
+
+            return user;
+        }
     }
 }
