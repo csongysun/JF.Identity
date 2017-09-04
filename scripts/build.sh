@@ -1,3 +1,4 @@
+
 set -e
 
 projs=("JF.Identity.API")
