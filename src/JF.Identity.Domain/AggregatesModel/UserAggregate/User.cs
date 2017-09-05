@@ -26,12 +26,12 @@ namespace JF.Identity.Domain.AggregatesModel.UserAggregate
         public static User Create(string email, string passworldHash, string nickname)
         {
             var user = new User();
+            user.Id = Guid.NewGuid();
             user.Email = email;
             user.PasswordHash = passworldHash;
             user.Nickname = user.Nickname;
 
             user.SecurityStamp = Guid.NewGuid().ToString();
-
             user.AddDomainEvent(new UserCreatedEvent(user));
 
             return user;

@@ -8,6 +8,6 @@
     <XunitVersion>2.3.0-beta4-build3742</XunitVersion>
     <XunitPerformanceVersion>1.0.0-beta-build0007</XunitPerformanceVersion>
     <NetStandardImplicitPackageVersion>2.0</NetStandardImplicitPackageVersion>
-    <JFCoreFxVersion>1.0.0-20170904.1</JFCoreFxVersion>
+    <JFCoreFxVersion>1.0.0-20170905.2</JFCoreFxVersion>
   </PropertyGroup>
 </Project>

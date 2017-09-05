@@ -10,7 +10,6 @@ namespace JF.Identity.Domain.Events
     {
         public UserCreatedEvent(User user)
         {
-            UserId = userId;
         }
         public Guid UserId { get; private set; }
         public string Nickname { get; private set; }
