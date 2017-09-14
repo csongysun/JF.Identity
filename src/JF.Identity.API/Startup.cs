@@ -14,8 +14,6 @@ namespace JF.Identity.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<ICommandBus, CommandBus>();
-            services.AddCommand<AuthCommandHandler>();
             services.AddMvcCore()
                 .AddJsonFormatters();
         }

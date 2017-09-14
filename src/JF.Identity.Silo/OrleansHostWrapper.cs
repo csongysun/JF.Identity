@@ -28,7 +28,6 @@ namespace JF.Identity.Silo
             try
             {
                 siloHost.InitializeOrleansSilo();
-
                 if (siloHost.StartOrleansSilo())
                 {
                     Console.WriteLine($"Successfully started Orleans silo '{siloHost.Name}' as a {siloHost.Type} node.");

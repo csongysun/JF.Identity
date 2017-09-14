@@ -28,6 +28,7 @@ namespace JF.Identity.Silo
         {
             var config = ClusterConfiguration.LocalhostPrimarySilo();
             config.AddMemoryStorageProvider();
+            config.UseStartupType<Startup>();
             hostWrapper = new OrleansHostWrapper(config);
             return hostWrapper.Run();
         }
