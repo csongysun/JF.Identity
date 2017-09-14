@@ -4,8 +4,8 @@ using Orleans;
 
 namespace JF.Identity.Grain.Abstractions
 {
-    public interface IUserGrain: IGrainWithGuidKey
+    public interface IUserGrain: IGrainWithIntegerKey
     {
-        Task<string> SignUpAsync(string email);
+        Task<CommandResult> SignUpAsync();
     }
 }

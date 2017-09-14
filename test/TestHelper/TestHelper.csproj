@@ -16,8 +16,4 @@
     <PackageReference Include="xunit" Version="$(XunitVersion)" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\JF.Identity.Core\JF.Identity.Core.csproj" />
-  </ItemGroup>
-
 </Project>

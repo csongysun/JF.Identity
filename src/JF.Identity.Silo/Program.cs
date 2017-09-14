@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Net;
+using System.Reflection;
+using JF.Identity.Grain;
+using JF.Identity.Grain.Abstractions;
 using Orleans.Runtime.Configuration;
 
 namespace JF.Identity.Silo
@@ -11,7 +14,7 @@ namespace JF.Identity.Silo
 
         static int Main(string[] args)
         {
-            int exitCode = InitializeOrleans();
+            int exitCode = InitializeOrleansLocalhost();
 
             Console.WriteLine("Press Enter to terminate...");
             Console.ReadLine();
@@ -21,18 +24,10 @@ namespace JF.Identity.Silo
             return exitCode;
         }
 
-        private static int InitializeOrleans()
+        private static int InitializeOrleansLocalhost()
         {
-            var config = new ClusterConfiguration();
-            config.Globals.DataConnectionString = "YOUR AZURE STORAGE CONNECTION STRING HERE";
-            config.Globals.DeploymentId = "Orleans-Docker";
-            config.Globals.LivenessType = GlobalConfiguration.LivenessProviderType.AzureTable;
-            config.Globals.ReminderServiceType = GlobalConfiguration.ReminderServiceProviderType.AzureTable;
-            config.Defaults.PropagateActivityId = true;
-            config.Defaults.ProxyGatewayEndpoint = new IPEndPoint(IPAddress.Any, 10400);
-            config.Defaults.Port = 10300;
-            var ips = Dns.GetHostAddressesAsync(Dns.GetHostName()).Result;
-            config.Defaults.HostNameOrIPAddress = ips.FirstOrDefault()?.ToString();
+            var config = ClusterConfiguration.LocalhostPrimarySilo();
+            config.AddMemoryStorageProvider();
             hostWrapper = new OrleansHostWrapper(config);
             return hostWrapper.Run();
         }
