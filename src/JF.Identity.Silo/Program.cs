@@ -17,9 +17,8 @@ namespace JF.Identity.Silo
             int exitCode = InitializeOrleansLocalhost();
 
             Console.WriteLine("Press Enter to terminate...");
+            while(true)
             Console.ReadLine();
-
-            exitCode += ShutdownSilo();
 
             return exitCode;
         }

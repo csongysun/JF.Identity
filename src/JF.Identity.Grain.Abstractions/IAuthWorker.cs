@@ -7,8 +7,8 @@ using Orleans.Concurrency;
 
 namespace JF.Identity.Grain
 {
-    public interface IAuthWorker: IGrain
+    public interface IAuthWorker: IGrainWithIntegerKey
     {
-        Task<CommandResult> SignUpAsync(string email);
+        Task<CommandResult> SignUpAsync(SignUpCommand cmd);
     }
 }

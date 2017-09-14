@@ -15,9 +15,10 @@ namespace JF.Identity.Grain
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
-        public async Task<CommandResult> SignUpAsync(string email)
+        public async Task<CommandResult> SignUpAsync(SignUpCommand cmd)
         {
             var user = new User();
+            user.Email = cmd.Email;
             await _context.AddAsync(user);
             await _context.SaveChangesAsync();
 
