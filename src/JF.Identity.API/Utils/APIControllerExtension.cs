@@ -12,9 +12,7 @@ namespace JF.Identity.API.Utils
     {
         public static IActionResult Error(this ControllerBase controller, string errorCode)
         {
-            controller.Response.StatusCode = StatusCodes.Status400BadRequest;
-            controller.Response.WriteAsync(errorCode, controller.HttpContext.RequestAborted);
-            return controller.NoContent();
+            return controller.StatusCode(StatusCodes.Status400BadRequest, errorCode);
         }
     }
 }

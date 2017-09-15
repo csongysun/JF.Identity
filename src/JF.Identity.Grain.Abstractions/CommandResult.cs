@@ -4,6 +4,7 @@ using System.Text;
 
 namespace JF.Identity.Grain
 {
+    [Serializable]
     public class CommandResult
     {
         public static CommandResult Ok = new CommandResult();

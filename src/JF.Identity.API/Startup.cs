@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Orleans;
 using Orleans.Runtime;
 using Orleans.Runtime.Configuration;
+using Orleans.Serialization;
 
 namespace JF.Identity.API
 {
@@ -40,6 +42,7 @@ namespace JF.Identity.API
             Console.WriteLine("silo initing");
 
             var config = ClientConfiguration.LocalhostSilo();
+            config.FallbackSerializationProvider = typeof(ILBasedSerializer).GetTypeInfo();
             client = new ClientBuilder().UseConfiguration(config).Build();
             await client.Connect();
             Console.WriteLine("connected");

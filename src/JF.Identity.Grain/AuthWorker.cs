@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using JF.Identity.Grain.Abstractions;
+using Microsoft.EntityFrameworkCore;
 using Orleans.Concurrency;
 
 namespace JF.Identity.Grain
@@ -20,10 +21,15 @@ namespace JF.Identity.Grain
             var user = new User();
             user.Email = cmd.Email;
             await _context.AddAsync(user);
-            await _context.SaveChangesAsync();
-
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                return new CommandResult("failed");
+            }
             var userGrain = GrainFactory.GetGrain<IUserGrain>(user.Id);
-
             return await userGrain.SignUpAsync();
         }
     }

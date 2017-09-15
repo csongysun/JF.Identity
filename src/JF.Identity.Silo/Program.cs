@@ -5,6 +5,7 @@ using System.Reflection;
 using JF.Identity.Grain;
 using JF.Identity.Grain.Abstractions;
 using Orleans.Runtime.Configuration;
+using Orleans.Serialization;
 
 namespace JF.Identity.Silo
 {
@@ -12,20 +13,24 @@ namespace JF.Identity.Silo
     {
         private static OrleansHostWrapper hostWrapper;
 
-        static int Main(string[] args)
+        static void Main(string[] args)
         {
             int exitCode = InitializeOrleansLocalhost();
+
+            System.AppDomain.CurrentDomain.ProcessExit += (s, e) =>
+            {
+                ShutdownSilo();
+            };
 
             Console.WriteLine("Press Enter to terminate...");
             while(true)
             Console.ReadLine();
-
-            return exitCode;
         }
 
         private static int InitializeOrleansLocalhost()
         {
             var config = ClusterConfiguration.LocalhostPrimarySilo();
+            config.Globals.FallbackSerializationProvider = typeof(ILBasedSerializer).GetTypeInfo();
             config.AddMemoryStorageProvider();
             config.UseStartupType<Startup>();
             hostWrapper = new OrleansHostWrapper(config);

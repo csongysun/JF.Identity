@@ -19,6 +19,7 @@ namespace JF.Identity.API
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .UseUrls("http://localhost:9090")
                 .UseStartup<Startup>()
                 .Build();
     }
