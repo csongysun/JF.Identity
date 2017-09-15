@@ -25,16 +25,13 @@ namespace JF.Identity.Grain
             user.Email = cmd.Email;
             
             await _context.AddAsync(user);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                return new CommandResult("failed");
-            }
+            await _context.SaveChangesAsync();
+
             var userGrain = GrainFactory.GetGrain<IUserGrain>(user.Id);
-            userGrain.InvokeOneWay(_ => _.BeginSignUpAsync(cmd.PasswordHash));
+
+            //Task.Run(() => userGrain.BeginSignUpAsync(cmd.PasswordHash)).Start();
+
+            userGrain.InvokeOneWay(_ => _.BeginSignUpAsync(cmd.Password));
             return CommandResult.Ok;
         }
 

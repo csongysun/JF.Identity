@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using JF.Identity.Grain;
+using JF.Identity.Service;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,6 +12,8 @@ namespace JF.Identity.Silo
     {
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IPasswordHasher, PasswordHasher>();
+
             services.AddEntityFrameworkNpgsql()
                 .AddDbContextPool<IdentityContext>(options =>
                 {
@@ -21,7 +24,6 @@ namespace JF.Identity.Silo
 
             var context = sp.GetService<IdentityContext>();
             context.Database.EnsureCreatedAsync().Wait();
-
             return sp;
         }
     }

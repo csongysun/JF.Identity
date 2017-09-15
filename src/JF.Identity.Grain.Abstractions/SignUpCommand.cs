@@ -8,14 +8,14 @@ namespace JF.Identity.Grain
     [Immutable]
     public class SignUpCommand
     {
-        public SignUpCommand(string email, string passwordHash, string nickname)
+        public SignUpCommand(string email, string password, string nickname)
         {
             Email = email;
-            PasswordHash = passwordHash;
+            Password = password;
             Nickname = nickname;
         }
         public string Email { get; private set; }
-        public string PasswordHash { get; private set; }
+        public string Password { get; private set; }
         public string Nickname { get; private set; }
     }
 }

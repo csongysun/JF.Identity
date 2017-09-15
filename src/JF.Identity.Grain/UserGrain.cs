@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using JF.Identity.Service;
 using Orleans;
@@ -35,6 +36,7 @@ namespace JF.Identity.Grain
 
         public async Task BeginSignUpAsync(string password)
         {
+            Thread.Sleep(3000);
             _state.CreatedDate = DateTimeOffset.Now;
             _state.PasswordHash = _passwordHasher.HashPassword(password);
             await _context.SaveChangesAsync();
