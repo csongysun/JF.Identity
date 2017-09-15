@@ -34,7 +34,8 @@ namespace JF.Identity.Grain
                 return new CommandResult("failed");
             }
             var userGrain = GrainFactory.GetGrain<IUserGrain>(user.Id);
-            return await userGrain.SignUpAsync();
+            userGrain.InvokeOneWay(_ => _.BeginSignUpAsync(cmd.PasswordHash));
+            return CommandResult.Ok;
         }
 
         public new virtual IGrainFactory GrainFactory

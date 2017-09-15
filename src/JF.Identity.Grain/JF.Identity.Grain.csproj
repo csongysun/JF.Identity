@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\test\JF.Identity.Service\JF.Identity.Service.csproj" />
     <ProjectReference Include="..\JF.Identity.Grain.Abstractions\JF.Identity.Grain.Abstractions.csproj" />
   </ItemGroup>
 

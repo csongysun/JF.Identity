@@ -28,9 +28,12 @@ namespace JF.Identity.API
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            var al = app.ApplicationServices.GetRequiredService<IApplicationLifetime>();
             InitSiloAsync().Wait();
-
+            var al = app.ApplicationServices.GetRequiredService<IApplicationLifetime>();
+            al.ApplicationStopping.Register(async () =>
+            {
+                await client.Close();
+            });
             app.UseMvc();
         }
 

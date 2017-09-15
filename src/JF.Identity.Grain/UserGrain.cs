@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using JF.Identity.Service;
 using Orleans;
 
 namespace JF.Identity.Grain
@@ -8,10 +9,14 @@ namespace JF.Identity.Grain
     {
         private User _state;
         private readonly IdentityContext _context;
+        private readonly IPasswordHasher _passwordHasher;
 
-        public UserGrain(IdentityContext context)
+        public UserGrain(
+            IdentityContext context,
+            IPasswordHasher passwordHasher)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
+            _passwordHasher = passwordHasher ?? throw new ArgumentNullException(nameof(passwordHasher));
         }
 
         public override async Task OnActivateAsync()
@@ -28,11 +33,11 @@ namespace JF.Identity.Grain
             await base.OnDeactivateAsync();
         }
 
-        public async Task<CommandResult> SignUpAsync()
+        public async Task BeginSignUpAsync(string password)
         {
             _state.CreatedDate = DateTimeOffset.Now;
+            _state.PasswordHash = _passwordHasher.HashPassword(password);
             await _context.SaveChangesAsync();
-            return CommandResult.Ok;
         }
     }
 }
