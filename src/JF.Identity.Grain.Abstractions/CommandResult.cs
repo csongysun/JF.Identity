@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Orleans.Concurrency;
 
 namespace JF.Identity.Grain
 {
+    [Immutable]
     public class CommandResult
     {
         public static CommandResult Ok = new CommandResult();

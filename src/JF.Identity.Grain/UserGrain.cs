@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using JF.Identity.Grain.Abstractions;
 using Orleans;
 
 namespace JF.Identity.Grain

@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Orleans;
 
-namespace JF.Identity.Grain.Abstractions
+namespace JF.Identity.Grain
 {
     public interface IUserGrain: IGrainWithIntegerKey
     {

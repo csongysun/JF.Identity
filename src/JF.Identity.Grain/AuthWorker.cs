@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using JF.Identity.Grain.Abstractions;
 using Microsoft.EntityFrameworkCore;
+using Orleans;
 using Orleans.Concurrency;
-using System.Linq;
 
 namespace JF.Identity.Grain
 {
@@ -38,6 +35,11 @@ namespace JF.Identity.Grain
             }
             var userGrain = GrainFactory.GetGrain<IUserGrain>(user.Id);
             return await userGrain.SignUpAsync();
+        }
+
+        public new virtual IGrainFactory GrainFactory
+        {
+            get { return base.GrainFactory; }
         }
     }
 }
