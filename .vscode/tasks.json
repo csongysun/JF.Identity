@@ -7,7 +7,7 @@
         {
             "taskName": "build",
             "args": [
-                "${workspaceRoot}\\src\\JF.Identity\\JF.Identity.csproj"
+                "${workspaceRoot}/src/JF.Identity.API/JF.Identity.API.csproj"
             ],
             "isBuildCommand": true,
             "problemMatcher": "$msCompile"

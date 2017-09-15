@@ -26,11 +26,8 @@ namespace JF.Identity.API
                 .AddJsonFormatters();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            loggerFactory.AddConsole();
-            loggerFactory.AddDebug();
-
             var al = app.ApplicationServices.GetRequiredService<IApplicationLifetime>();
             InitSiloAsync().Wait();
 

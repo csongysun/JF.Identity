@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using JF.Identity.Grain.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using Orleans.Concurrency;
+using System.Linq;
 
 namespace JF.Identity.Grain
 {
@@ -18,8 +19,14 @@ namespace JF.Identity.Grain
         }
         public async Task<CommandResult> SignUpAsync(SignUpCommand cmd)
         {
+            if(await _context.Users.AnyAsync(u=>u.Email == cmd.Email))
+            {
+                return new CommandResult("Email exists");
+            }
+
             var user = new User();
             user.Email = cmd.Email;
+            
             await _context.AddAsync(user);
             try
             {

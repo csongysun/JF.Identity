@@ -4,7 +4,6 @@ using System.Text;
 
 namespace JF.Identity.Grain
 {
-    [Serializable]
     public class EntityNotFoundException: Exception
     {
     }
