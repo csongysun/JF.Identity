@@ -36,7 +36,7 @@ namespace JF.Identity.Grain
 
         public async Task BeginSignUpAsync(string password)
         {
-            Thread.Sleep(3000);
+            //Thread.Sleep(30000);
             _state.CreatedDate = DateTimeOffset.Now;
             _state.PasswordHash = _passwordHasher.HashPassword(password);
             await _context.SaveChangesAsync();
