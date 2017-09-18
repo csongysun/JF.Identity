@@ -27,12 +27,8 @@ namespace JF.Identity.Grain
             await _context.AddAsync(user);
             await _context.SaveChangesAsync();
 
-            //var userGrain = GrainFactory.GetGrain<IUserGrain>(user.Id);
-
-            ////Task.Run(() => userGrain.BeginSignUpAsync(cmd.PasswordHash)).Start();
-
-            ////userGrain.InvokeOneWay(_ => _.BeginSignUpAsync(cmd.Password));
-            //await userGrain.BeginSignUpAsync(cmd.Password);
+            var userGrain = GrainFactory.GetGrain<IUserGrain>(user.Id);
+            userGrain.InvokeOneWay(_ => _.BeginSignUpAsync(cmd.Password));
             return CommandResult.Ok;
         }
 
