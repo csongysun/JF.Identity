@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
+using JF.Identity.Domain.Command;
+using JF.Identity.Grain.Commands;
 using Microsoft.EntityFrameworkCore;
 using Orleans;
 using Orleans.Concurrency;
@@ -14,7 +16,7 @@ namespace JF.Identity.Grain
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
-        public async Task<CommandResult> SignUpAsync(SignUpCommand cmd)
+        public async Task<CommandResult> HandleAsync(SignUpCommand cmd)
         {
             if(await _context.Users.AnyAsync(u=>u.Email == cmd.Email))
             {

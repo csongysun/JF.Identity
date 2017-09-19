@@ -62,11 +62,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JF.Identity.Grain", "src\JF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JF.Identity.Silo", "src\JF.Identity.Silo\JF.Identity.Silo.csproj", "{D8407661-946B-494E-96F4-BD809A37CDE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHelper", "test\TestHelper\TestHelper.csproj", "{F7559943-51A8-4437-87A5-33A399FD5533}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestHelper", "test\TestHelper\TestHelper.csproj", "{F7559943-51A8-4437-87A5-33A399FD5533}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JF.Identity.Grain.Tests", "test\JF.Identity.Grain.Tests\JF.Identity.Grain.Tests.csproj", "{E0F681D1-BC4F-4B8B-B8B8-7D7B8234C887}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JF.Identity.Grain.Tests", "test\JF.Identity.Grain.Tests\JF.Identity.Grain.Tests.csproj", "{E0F681D1-BC4F-4B8B-B8B8-7D7B8234C887}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JF.Identity.Service", "test\JF.Identity.Service\JF.Identity.Service.csproj", "{893F3DD6-F9DC-4CA5-9F25-B867BDBF7B07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JF.Identity.Service", "test\JF.Identity.Service\JF.Identity.Service.csproj", "{893F3DD6-F9DC-4CA5-9F25-B867BDBF7B07}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JF.Identity.Domain", "src\JF.Identity.Domain\JF.Identity.Domain.csproj", "{32C424EF-4E8F-4227-9A8B-590349C82100}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -294,6 +296,18 @@ Global
 		{893F3DD6-F9DC-4CA5-9F25-B867BDBF7B07}.Release|x64.Build.0 = Release|Any CPU
 		{893F3DD6-F9DC-4CA5-9F25-B867BDBF7B07}.Release|x86.ActiveCfg = Release|Any CPU
 		{893F3DD6-F9DC-4CA5-9F25-B867BDBF7B07}.Release|x86.Build.0 = Release|Any CPU
+		{32C424EF-4E8F-4227-9A8B-590349C82100}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32C424EF-4E8F-4227-9A8B-590349C82100}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32C424EF-4E8F-4227-9A8B-590349C82100}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{32C424EF-4E8F-4227-9A8B-590349C82100}.Debug|x64.Build.0 = Debug|Any CPU
+		{32C424EF-4E8F-4227-9A8B-590349C82100}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{32C424EF-4E8F-4227-9A8B-590349C82100}.Debug|x86.Build.0 = Debug|Any CPU
+		{32C424EF-4E8F-4227-9A8B-590349C82100}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32C424EF-4E8F-4227-9A8B-590349C82100}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32C424EF-4E8F-4227-9A8B-590349C82100}.Release|x64.ActiveCfg = Release|Any CPU
+		{32C424EF-4E8F-4227-9A8B-590349C82100}.Release|x64.Build.0 = Release|Any CPU
+		{32C424EF-4E8F-4227-9A8B-590349C82100}.Release|x86.ActiveCfg = Release|Any CPU
+		{32C424EF-4E8F-4227-9A8B-590349C82100}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -319,6 +333,7 @@ Global
 		{F7559943-51A8-4437-87A5-33A399FD5533} = {D6F07EF0-ACA9-4828-B9AA-708BE6B83E31}
 		{E0F681D1-BC4F-4B8B-B8B8-7D7B8234C887} = {D6F07EF0-ACA9-4828-B9AA-708BE6B83E31}
 		{893F3DD6-F9DC-4CA5-9F25-B867BDBF7B07} = {10A2D9BD-C833-49BB-A62C-26E9704CE2E5}
+		{32C424EF-4E8F-4227-9A8B-590349C82100} = {10A2D9BD-C833-49BB-A62C-26E9704CE2E5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0790C42D-19B9-4797-9FD7-5990C0FE71B5}

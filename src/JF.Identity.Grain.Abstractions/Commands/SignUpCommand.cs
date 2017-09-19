@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using JF.Identity.Domain.Command;
 using Orleans.Concurrency;
 
-namespace JF.Identity.Grain
+namespace JF.Identity.Grain.Commands
 {
     [Immutable]
-    public class SignUpCommand
+    public class SignUpCommand: ICommand
     {
         public SignUpCommand(string email, string password, string nickname)
         {

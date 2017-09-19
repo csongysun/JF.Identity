@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Orleans.Concurrency;
 
-namespace JF.Identity.Grain
+namespace JF.Identity.Domain.Command
 {
     [Immutable]
     public class CommandResult
