@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using JF.Identity.API.Utils;
 using JF.Identity.Grain;
+using JF.Identity.Grain.Commands;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Orleans;
@@ -29,7 +30,7 @@ namespace JF.Identity.API.Controllers
             var sw = new Stopwatch();
             sw.Start();
             var grain = _factory.GetGrain<IAuthWorker>(0);
-            var ret = await grain.SignUpAsync(cmd);
+            var ret = await grain.HandleAsync(cmd);
             sw.Stop();
             _logger.LogWarning(sw.ElapsedMilliseconds.ToString());
             return ret.Succeed ? Accepted() : this.Error(ret.ErrorCode);
