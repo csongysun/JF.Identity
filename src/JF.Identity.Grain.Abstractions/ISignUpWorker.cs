@@ -9,7 +9,7 @@ using Orleans.Concurrency;
 
 namespace JF.Identity.Grain
 {
-    public interface IAuthWorker: 
+    public interface ISignUpWorker: 
         ICommandHandler<SignUpCommand>
     {
     }

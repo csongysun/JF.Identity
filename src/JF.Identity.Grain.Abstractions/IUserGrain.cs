@@ -6,6 +6,10 @@ namespace JF.Identity.Grain
 {
     public interface IUserGrain: IGrainWithIntegerKey
     {
-        Task BeginSignUpAsync(string password);
+        Task SignUpAsync();
+
+        Task UpdatePasswordAsync(string newPassword);
+
+        Task SaveChangesAsync();
     }
 }

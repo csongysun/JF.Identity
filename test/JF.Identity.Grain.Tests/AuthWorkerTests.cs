@@ -15,7 +15,7 @@ namespace JF.Identity.Grain.Tests
         {
             var context = MockDb.Sqlite;
             var userGrainMock = new Mock<IUserGrain>();
-            var authMock = new Mock<AuthWorker>(context);
+            var authMock = new Mock<SignUpWorker>(context);
             authMock.Setup(a => a.GrainFactory.GetGrain<IUserGrain>(It.IsAny<int>(), null))
                 .Returns(userGrainMock.Object);
 

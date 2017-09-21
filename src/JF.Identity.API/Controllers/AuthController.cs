@@ -29,7 +29,7 @@ namespace JF.Identity.API.Controllers
         {
             var sw = new Stopwatch();
             sw.Start();
-            var grain = _factory.GetGrain<IAuthWorker>(0);
+            var grain = _factory.GetGrain<ISignUpWorker>(0);
             var ret = await grain.HandleAsync(cmd);
             sw.Stop();
             _logger.LogWarning(sw.ElapsedMilliseconds.ToString());

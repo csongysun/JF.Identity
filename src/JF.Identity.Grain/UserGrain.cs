@@ -34,12 +34,21 @@ namespace JF.Identity.Grain
             await base.OnDeactivateAsync();
         }
 
-        public async Task BeginSignUpAsync(string password)
+        public Task SignUpAsync()
         {
-            //Thread.Sleep(30000);
             _state.CreatedDate = DateTimeOffset.Now;
-            _state.PasswordHash = _passwordHasher.HashPassword(password);
-            await _context.SaveChangesAsync();
+            return Task.CompletedTask;
+        }
+
+        public Task UpdatePasswordAsync(string newPassword)
+        {
+            _state.PasswordHash = _passwordHasher.HashPassword(newPassword);
+            return Task.CompletedTask;
+        }
+
+        public Task SaveChangesAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 }
