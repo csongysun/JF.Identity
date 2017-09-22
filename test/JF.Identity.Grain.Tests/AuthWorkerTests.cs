@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using JF.Identity.Grain;
 using JF.Identity.Grain.Commands;
+using JF.Identity.Service;
 using Moq;
 using TestHelper;
 using Xunit;
@@ -15,7 +16,9 @@ namespace JF.Identity.Grain.Tests
         {
             var context = MockDb.Sqlite;
             var userGrainMock = new Mock<IUserGrain>();
-            var authMock = new Mock<SignUpWorker>(context);
+            var phMock = new Mock<IPasswordHasher>();
+            phMock.Setup(_ => _.HashPassword(It.IsAny<string>())).Returns<string>(pwd => pwd);
+            var authMock = new Mock<SignUpWorker>(context, phMock.Object);
             authMock.Setup(a => a.GrainFactory.GetGrain<IUserGrain>(It.IsAny<int>(), null))
                 .Returns(userGrainMock.Object);
 
