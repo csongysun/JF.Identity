@@ -14,7 +14,7 @@
     <PackageReference Include="xunit" Version="$(XunitVersion)" />
     <PackageReference Include="xunit.runner.visualstudio" Version="$(XunitVersion)" />
     <DotNetCliToolReference Include="dotnet-xunit" Version="$(XunitVersion)" />
-    <PackageReference Include="Microsoft.Orleans.TestingHost" Version="$(OrleansVersion)" />
+    <!--<PackageReference Include="Microsoft.Orleans.TestingHost" Version="$(OrleansVersion)" />-->
   </ItemGroup>
 
   <ItemGroup>
