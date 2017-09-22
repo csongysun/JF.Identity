@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="JF.Domain.Orleans" Version="$(JFCoreFxVersion)" />
     <PackageReference Include="Microsoft.Orleans.Core" Version="$(OrleansVersion)" />
   </ItemGroup>
 

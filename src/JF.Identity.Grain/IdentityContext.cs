@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using JF.Identity.Domain.AggregatesModel.UserAggregate;
 using Microsoft.EntityFrameworkCore;
 
 namespace JF.Identity.Grain

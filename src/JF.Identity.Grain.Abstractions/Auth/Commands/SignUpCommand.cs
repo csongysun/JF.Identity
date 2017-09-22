@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using JF.Identity.Domain.Command;
+﻿using JF.Domain.Command;
 using Orleans.Concurrency;
 
 namespace JF.Identity.Grain.Commands

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using JF.Identity.Domain.Command;
+using JF.Domain.Command;
+using JF.Identity.Domain.AggregatesModel.UserAggregate;
 using JF.Identity.Grain.Commands;
 using JF.Identity.Service;
 using Microsoft.EntityFrameworkCore;

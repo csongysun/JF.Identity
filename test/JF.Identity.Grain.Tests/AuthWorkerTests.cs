@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using JF.Identity.Domain.AggregatesModel.UserAggregate;
 using JF.Identity.Grain;
 using JF.Identity.Grain.Commands;
 using JF.Identity.Service;

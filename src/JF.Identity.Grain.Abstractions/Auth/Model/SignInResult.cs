@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace JF.Identity.Domain.Event
+namespace JF.Identity.Grain.Auth.Model
 {
-    public interface IEvent
+    public class SignInResult
     {
     }
 }

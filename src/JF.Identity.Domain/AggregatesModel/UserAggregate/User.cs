@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using JF.Domain.SeedWork;
 
-namespace JF.Identity.Grain
+namespace JF.Identity.Domain.AggregatesModel.UserAggregate
 {
-    public class User
+    public class User: Entity<long>, IAggregateRoot
     {
-        public long Id { get; set; }
         public string PasswordHash { get; set; }
         public string Email { get; set; }
         public DateTimeOffset CreatedDate { get; set; }
