@@ -20,7 +20,7 @@ namespace JF.Identity.Grain
         public async Task<SignInResult> HandleAsync(SignInCommand command)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == command.Email);
-            if (user == null) return SignInResult.Error("UserNotFound");
+            if (user == null) return SignInResult.UserNotFound;
             var userGrain = GrainFactory.GetGrain<IUserGrain>(user.Id);
             throw new NotImplementedException();
         }

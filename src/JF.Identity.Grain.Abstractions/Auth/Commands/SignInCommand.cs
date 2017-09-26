@@ -3,7 +3,7 @@ using JF.Identity.Grain.Auth.Model;
 
 namespace JF.Identity.Grain.Commands
 {
-    public class SignInCommand: ICommand<SignInResult>
+    public class SignInCommand: ICommand
     {
         public SignInCommand(string email, string password)
         {

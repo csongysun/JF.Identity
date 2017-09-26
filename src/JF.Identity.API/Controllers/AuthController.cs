@@ -33,7 +33,7 @@ namespace JF.Identity.API.Controllers
             var ret = await grain.HandleAsync(cmd);
             sw.Stop();
             _logger.LogWarning(sw.ElapsedMilliseconds.ToString());
-            return ret.Succeed ? Accepted() : this.Error(ret.ErrorCode);
+            return ret.Succeed ? Accepted() : this.Error(ret.ErrorMessage);
         }
     }
 }

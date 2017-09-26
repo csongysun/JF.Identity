@@ -28,7 +28,7 @@ namespace JF.Identity.Grain
         {
             if(await _context.Users.AnyAsync(u=>u.Email == cmd.Email))
             {
-                return new CommandResult("Email exists");
+                return CommandResult.Error("Email exists");
             }
 
             var user = new User();
